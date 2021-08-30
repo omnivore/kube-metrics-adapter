@@ -20,6 +20,16 @@ spec:
       annotations: {{- toYaml .Values.podAnnotations | nindent 8 }}
       {{- end }}
     spec:
+      {{- if .Values.automountServiceAccountToken }}
+      automountServiceAccountToken: true
+      {{- end }}
+      {{- if .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
+      {{- end }}
+      {{- if .Values.priorityClassName }}
+      priorityClassName: {{ .Values.priorityClassName }}
+      {{- end }}
       serviceAccountName: kube-metrics-adapter
     {{- if .Values.nodeSelector }}
       nodeSelector: {{ toYaml .Values.nodeSelector | nindent 8 }}
